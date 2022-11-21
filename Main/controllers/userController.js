@@ -1,9 +1,8 @@
-const { User, Thought } = require('../models');
-//const User = require('../models/user');
-//const User = require('../models/User');
+const User = require('../models/user');
+const Thought = require('../models/user');
 
 module.exports = {
-  // Get all courses
+  // Get all users
     getUsers(req, res) {
         User.find()
         .then((users) => res.json(users))

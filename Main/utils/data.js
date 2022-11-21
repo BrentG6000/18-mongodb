@@ -1,13 +1,3 @@
-const users = [
-    {
-        John371,
-        john@acme.com,
-        [
-            
-        ]
-  }
-];
-
 const thoughts = [
     
 ]

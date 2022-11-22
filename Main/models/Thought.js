@@ -3,22 +3,14 @@ const { Schema, model } = require('mongoose');
 const thoughtSchema = new Schema(
   {
     thoughtText: {
-        type: String,
-          required: true,
-        min_length: 1,
-        max_length: 280,
+      type: String,
+      required: true,
+      min_length: 1,
+      max_length: 280,
     },
     createdAt: {
       type: Date,
       default: Date.now(),
-    },
-    createdAt: {
-      type: Date.now(),
-      get: () => {
-        return (
-          `This thought created at ${this.createdAt}`
-        )
-      },
     },
     username: {
       type: String,
@@ -42,7 +34,7 @@ const thoughtSchema = new Schema(
 thoughtSchema
   .virtual('reactionCount')
     .get(() => {
-        return this.reactions.length;
+        return (this.reactions && this.reactions.length) ? this.reactions.length : 0
   });
 
 const Thought = model('thought', thoughtSchema);

@@ -1,4 +1,6 @@
-const { Thought, Reaction } = require('../models');
+const Thought = require('../models/Thought');
+const User = require('../models/User');
+const Reaction = require('../models/Reaction');
 
 module.exports = {
   // Get all courses
@@ -20,14 +22,51 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
      },
   // Create a course
-  createThought(req, res) {
-    Thought.create(req.body)
-      .then((thought) => res.json(thought))
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
-  },
+//   createThought(req, res) {
+//     Thought.create(req.body)
+//       .then((thought) => res.json(thought))
+//       .catch((err) => {
+//         console.log(err);
+//         return res.status(500).json(err);
+//       });
+//   },
+    
+    createThought(req, res) {
+        Thought.create(req.body)
+            .then((thought) => {
+                //res.json(thought)
+                User.findOne({ username: req.body.username })
+                    .then((user) => {
+                        //console.log(user.username)
+                        let newThoughts = []
+                        //console.log(user.thoughts)
+                        if (user.thoughts != null) {
+                            newThoughts = user.thoughts;
+                        }
+                        //console.log(newThoughts)
+                        newThoughts.push(thought._id)
+                        console.log(newThoughts)
+                        User.findOneAndUpdate(
+                            { username: req.body.username },
+                            { thoughts: newThoughts },
+                            { runValidators: true, new: true }
+                        ).then((user) =>
+                            !user
+                                ? res.status(404).json({ message: 'No user with this id!' })
+                                : res.json(thought)
+                        )
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        return res.status(500).json(err);;
+                
+                
+            })
+        // .catch((err) => {
+        //     console.log(err);
+        //     return res.status(500).json(err);
+        });
+    },
   // Delete a course
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })

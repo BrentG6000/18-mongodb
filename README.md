@@ -13,7 +13,7 @@ to do this). Then run "npm run start" to begin the program.
 ## Usage
 
 This app only uses a database with no frontend, so you should use a program like Insomnia or Postman to add, update, or delete database entries.
-Here is a video of the program running: 
+Here is a video of the program running: https://drive.google.com/file/d/11kPD2eYhchrnuNQSmFaosCX9-BxVH9ks/view
 
 ## License
 
